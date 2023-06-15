@@ -1,0 +1,20 @@
+﻿<h1>About</h1>
+<h2>About Company</h2>
+<p>Right Find is software company that is establish to give a services about all the IT
+    related activities.
+</p>
+
+@{
+    ListModel  listModel  = new ListModel();
+    listModel.ListTitle = "Programming Language";
+    listModel.ListItems = new List<string>()
+    {
+     "C++",
+     "C#",
+     "Python",
+     "Javascript"
+    };
+
+    await Html.RenderPartialAsync("_ListPartialView",listModel);
+}
+

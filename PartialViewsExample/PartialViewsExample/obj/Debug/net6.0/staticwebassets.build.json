@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "OrKhf6YZH1KFxUb5lRCvaKpg6CXmCVOyxvn15aJUlvw=",
+  "Source": "PartialViewsExample",
+  "BasePath": "_content/PartialViewsExample",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "PartialViewsExample\\wwwroot",
+      "Source": "PartialViewsExample",
+      "ContentRoot": "C:\\Users\\dell\\Desktop\\C#\\PartialViewsExample\\PartialViewsExample\\wwwroot\\",
+      "BasePath": "_content/PartialViewsExample",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
