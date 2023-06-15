@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "Z+LQLfqHlXejxsGl9rI+OpJgg1AR0FYAYndOskl7EIk=",
+  "Source": "ViewComponentExample",
+  "BasePath": "_content/ViewComponentExample",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ViewComponentExample\\wwwroot",
+      "Source": "ViewComponentExample",
+      "ContentRoot": "C:\\Users\\dell\\Desktop\\C#\\ViewComponentExample\\ViewComponentExample\\wwwroot\\",
+      "BasePath": "_content/ViewComponentExample",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\dell\\Desktop\\C#\\ViewComponentExample\\ViewComponentExample\\wwwroot\\friends.js",
+      "SourceId": "ViewComponentExample",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\dell\\Desktop\\C#\\ViewComponentExample\\ViewComponentExample\\wwwroot\\",
+      "BasePath": "_content/ViewComponentExample",
+      "RelativePath": "friends.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\friends.js"
+    },
+    {
+      "Identity": "C:\\Users\\dell\\Desktop\\C#\\ViewComponentExample\\ViewComponentExample\\wwwroot\\StyleSheet.css",
+      "SourceId": "ViewComponentExample",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\dell\\Desktop\\C#\\ViewComponentExample\\ViewComponentExample\\wwwroot\\",
+      "BasePath": "_content/ViewComponentExample",
+      "RelativePath": "StyleSheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\StyleSheet.css"
+    }
+  ]
+}

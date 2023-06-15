@@ -1,0 +1,25 @@
+﻿
+@model PersonGridModel
+<div class="box">
+    <h3>@Model.GridTitle</h3>
+    <table class="table w-100">
+        <thead>
+            <tr>
+                <th>Symbol Number</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        @foreach(Person person in Model.Person)
+        {
+            <tbody>
+            <tr>
+                <td>@person.PersonName</td>
+                <td>@person.JobTitle</td>
+            </tr>
+            
+          </tbody> 
+        }
+       
+    </table>
+</div>
