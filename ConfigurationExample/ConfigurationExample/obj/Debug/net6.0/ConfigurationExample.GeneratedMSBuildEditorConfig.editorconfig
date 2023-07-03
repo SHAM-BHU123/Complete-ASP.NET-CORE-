@@ -9,21 +9,21 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ConfigurationExample
 build_property.RootNamespace = ConfigurationExample
-build_property.ProjectDir = C:\Users\dell\Desktop\C#\ConfigurationExample\ConfigurationExample\
+build_property.ProjectDir = C:\Users\dell\Source\Repos\SHAM-BHU123\Complete-ASP.NET-CORE-\ConfigurationExample\ConfigurationExample\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\dell\Desktop\C#\ConfigurationExample\ConfigurationExample
+build_property.MSBuildProjectDirectory = C:\Users\dell\Source\Repos\SHAM-BHU123\Complete-ASP.NET-CORE-\ConfigurationExample\ConfigurationExample
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/dell/Desktop/C\#/ConfigurationExample/ConfigurationExample/Views/Home/Index.cshtml]
+[C:/Users/dell/Source/Repos/SHAM-BHU123/Complete-ASP.NET-CORE-/ConfigurationExample/ConfigurationExample/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dell/Desktop/C\#/ConfigurationExample/ConfigurationExample/Views/Shared/_Layout.cshtml]
+[C:/Users/dell/Source/Repos/SHAM-BHU123/Complete-ASP.NET-CORE-/ConfigurationExample/ConfigurationExample/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/dell/Desktop/C\#/ConfigurationExample/ConfigurationExample/Views/_ViewStart.cshtml]
+[C:/Users/dell/Source/Repos/SHAM-BHU123/Complete-ASP.NET-CORE-/ConfigurationExample/ConfigurationExample/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
