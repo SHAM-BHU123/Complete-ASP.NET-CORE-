@@ -7,6 +7,7 @@ using Services;
 using Xunit;
 using System.Data.SqlTypes;
 using Xunit.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRUDTests
 {
@@ -20,7 +21,9 @@ namespace CRUDTests
 
         public CountriesServiceTest(ITestOutputHelper testOutputHelper)
         {
-            _countriesService = new CountriesService(false);
+            _countriesService = new CountriesService
+                (new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options));
+
             _testoutputHelper = testOutputHelper;
         }
 
