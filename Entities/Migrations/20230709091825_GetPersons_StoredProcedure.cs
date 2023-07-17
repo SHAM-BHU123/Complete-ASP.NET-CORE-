@@ -24,7 +24,6 @@ namespace Entities.Migrations
         {
             string getAllPersonsProcedure = @"
                 
-                    DROP PROCEDURE [dbo].[GetAllPersons]
                    
              ";
 

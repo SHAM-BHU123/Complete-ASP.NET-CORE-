@@ -22,11 +22,14 @@ namespace ServiceContracts.DTO
         public DateTime? DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Please select gender of the person")]
+        
         public GenderOptions? Gender { get; set; }
 
+      
         [Required(ErrorMessage = "Please select a country")]
         public Guid? CountryID { get; set; }
 
+        [Required(ErrorMessage ="Address should not be empty")]
         public string? Address { get; set; }
         public bool ReceiveNewsLetters { get; set; }
 

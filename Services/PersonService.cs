@@ -8,23 +8,29 @@ using Services.Helpers;
 using System.Net.Http.Headers;
 using ServiceContracts.Enums;
 using System.Runtime.ConstrainedExecution;
+using Microsoft.EntityFrameworkCore;
+using CsvHelper;
+using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
+using CsvHelper.Configuration;
+using OfficeOpenXml;
 
 namespace Services
 {
 
     public class PersonService : IPersonsService
     {
-        private readonly PersonsDbContext _dbContex;
+        private readonly PersonsDbContext _dbContext;
 
         private readonly ICountriesService _countriesService;
         public PersonService(PersonsDbContext personsDbContext,ICountriesService countriesService)
         {
-            _dbContex = personsDbContext;
+            _dbContext = personsDbContext;
             _countriesService = countriesService;
            
          }
 
-        private PersonResponse ConvertPersonToPersonResponse(Person person)
+       /* private  PersonResponse ConvertPersonToPersonResponse(Person person)
         {
             //Return PersonResponse object with generated PersonID
             PersonResponse personResponse = person.ConvertPersonToPersonResponse();
@@ -32,9 +38,9 @@ namespace Services
             personResponse.Country = _countriesService.
             GetCountryByCountryID(person.CountryID)?.CountryName;
             return personResponse;
-        }
+        }*/
 
-        public PersonResponse AddPerson(PersonAddRequest? personAddRequest)
+        public async Task< PersonResponse> AddPerson(PersonAddRequest? personAddRequest)
         {
            //Check if "personAddRequest" is not null
             if(personAddRequest == null)
@@ -58,28 +64,38 @@ namespace Services
            //Generate new PersonID.
            person.PersonID=Guid.NewGuid();
 
-           //Then add it into List<Person>
-           _dbContex.Persons.Add(person);
-           _dbContex.SaveChanges();
+           /* Then add it into List<Person>
+            _dbContex.Persons.Add(person);
+            _dbContex.SaveChanges();*/
 
-            return ConvertPersonToPersonResponse(person);  
+            await _dbContext.StoreProcedureInsertPerson(person);
+
+            return person.ConvertPersonToPersonResponse(); 
         }
 
-        public List<PersonResponse> GetAllPersons()
-        {
+        public async  Task<List<PersonResponse>> GetAllPersons()
+        { 
             /*
                Convert all person from "Person" type to "PersonResponse" type.
                Return all PersonResponse object
                Select * From Persons
-               return _dbContex.Persons.ToList()
+                return _dbContex.Persons.ToList()
                .Select(temp=>ConvertPersonToPersonResponse(temp)).ToList();
-           */
-                return _dbContex.StoredProcedureGetAllPersons()
-                .Select(temp => ConvertPersonToPersonResponse(temp)).ToList();
+            */
+
+            var person=await _dbContext.Persons.Include("Country").ToListAsync();
+            return person.Select(temp=>temp.ConvertPersonToPersonResponse()).ToList();
+
+            /*return _dbContext.StoredProcedureGetAllPersons()
+           .Select(temp => ConvertPersonToPersonResponse(temp)).ToList();*/
+
+            /*var persons = await _dbContext.StoredProcedureGetAllPersons().ToListAsync();
+            return persons.Select(temp => ConvertPersonToPersonResponse(temp)).ToList();*/
+
         }
 
 
-        public PersonResponse? GetPersonByPersonID(Guid? personID)
+        public async Task<PersonResponse?> GetPersonByPersonID(Guid? personID)
         {
             //check if "personID" is not null.
             if (personID == null)
@@ -88,19 +104,19 @@ namespace Services
             }
                 //Get matching person from List<Person> based PersonID.
                 //Convert matching person object from "Person" to "PersonResponse" type.
-                Person? person =_dbContex.Persons.FirstOrDefault(temp => temp.PersonID == personID);
+                Person? person = await _dbContext.Persons.FirstOrDefaultAsync(temp => temp.PersonID == personID);
                 if (person == null)
                 {
                     return null;
                 }
                 //Return PersonResponse object.
-                return ConvertPersonToPersonResponse(person);
+                return person.ConvertPersonToPersonResponse();
         }
 
-        public List<PersonResponse> GetFilteredPerson(string searchBy, string? searchString)
+        public async  Task< List<PersonResponse>> GetFilteredPerson(string searchBy, string? searchString)
         {
             //Check if "searchBy" is not null
-            List<PersonResponse> allPersons=GetAllPersons();
+            List<PersonResponse> allPersons= await GetAllPersons();
 
             List<PersonResponse> matchingPersons = allPersons;
 
@@ -168,7 +184,7 @@ namespace Services
             return matchingPersons;
         }
 
-        public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
+        public  async Task< List<PersonResponse>> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder)
         {
             if (string.IsNullOrEmpty(sortBy))
             {
@@ -246,7 +262,7 @@ namespace Services
             return sortedPersons;
         }
 
-        public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
+        public async Task<PersonResponse> UpdatePerson(PersonUpdateRequest? personUpdateRequest)
         {
             //Check if"personUpdateRequest" is not null
 
@@ -258,51 +274,150 @@ namespace Services
             //Validate all the properties of "PersonUpdateRequest"
             ValidationHelper.ModelValidation(personUpdateRequest);
 
+            /*this is a stored procedure code
+            Person person = personUpdateRequest.ToPerson();
+            _dbContext.StoreProcedureUpdatePerson(person);
+            return ConvertPersonToPersonResponse(person);*/
 
-            //Get all the matching "Person" object form List<Person> based on PersonID
+           //Get all the matching "Person" object form List<Person> based on PersonID
 
-           Person ? matchingPerson =
-                _dbContex.Persons.FirstOrDefault(temp=>temp.PersonID==personUpdateRequest.PersonID);
-
-            //Check if matching "Person" object in not null
+            Person? matchingPerson=await _dbContext.Persons.FirstOrDefaultAsync(temp=>temp.PersonID==personUpdateRequest.PersonID);
             if(matchingPerson == null)
             {
-                throw new ArgumentException("Given person id doesn't exit");
+                throw new ArgumentException("Given person id doesn't exist");
             }
-            //Update all details from "PersonUpdateRequest" object to "Person" object
 
             matchingPerson.PersonName = personUpdateRequest.PersonName;
             matchingPerson.Email = personUpdateRequest.Email;
             matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
-            matchingPerson.Gender= personUpdateRequest.Gender.ToString();
+            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
             matchingPerson.CountryID = personUpdateRequest.CountryID;
             matchingPerson.Address = personUpdateRequest.Address;
             matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
 
-            _dbContex.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             //Convert the person object from "Person" to "PersonResponse" type
             //Return PersonResponse object with update details
-            return ConvertPersonToPersonResponse(matchingPerson); 
-             
-            
-
+             return matchingPerson.ConvertPersonToPersonResponse();
         }
 
-        public bool DeletePerson(Guid? personID)
+        public async Task<bool> DeletePerson(Guid? personID)
         {
             if(personID == null)
             {
                 throw new ArgumentNullException();
             }
-            Person? person=_dbContex.Persons.FirstOrDefault(temp => temp.PersonID == personID);
+            /*Guid personid = (Guid)personID;
+            \
+            if (personid.Equals(Guid.Empty))
+            {
+                return false;
+            }*/
+            //_dbContext.StoreProcedureDeletePerson(personid);
 
+
+           Person? person= await _dbContext.Persons.FirstOrDefaultAsync(temp => temp.PersonID == personID);
             if (person == null)
             {
                 return false;
             }
-            _dbContex.Persons.Remove(_dbContex.Persons.First(temp=>temp.PersonID==personID));
-            _dbContex.SaveChanges();
+            _dbContext.Persons.Remove(_dbContext.Persons.First(temp => temp.PersonID == personID));
+            await _dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<MemoryStream> GetPersonCSV()
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            StreamWriter streamWriter=new StreamWriter(memoryStream);
+            CsvConfiguration csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture);
+            CsvWriter csvWriter=new CsvWriter(streamWriter, csvConfiguration);
+            csvWriter.WriteField(nameof(PersonResponse.PersonName));
+            csvWriter.WriteField(nameof(PersonResponse.Email));
+            csvWriter.WriteField(nameof(PersonResponse.DateOfBirth));
+            csvWriter.WriteField(nameof(PersonResponse.Age));
+            csvWriter.WriteField(nameof(PersonResponse.Country));
+            csvWriter.WriteField(nameof(PersonResponse.Address));
+            csvWriter.WriteField(nameof(PersonResponse.ReceiveNewsLetters));
+            csvWriter.NextRecord();
+
+            List<PersonResponse> persons= _dbContext.Persons.Include("Country").Select(temp=>temp.ConvertPersonToPersonResponse()).ToList();
+            foreach(PersonResponse person in persons)
+            {
+                csvWriter.WriteField(person.PersonName);
+                csvWriter.WriteField(person.Email);
+                if (person.DateOfBirth.HasValue)
+                {
+                    csvWriter.WriteField(person.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                }
+                else
+                {
+                    csvWriter.WriteField("");
+                }
+                csvWriter.WriteField(person.Age);
+                csvWriter.WriteField(person.Country);
+                csvWriter.WriteField(person.Address);
+                csvWriter.WriteField(person.ReceiveNewsLetters);
+                csvWriter.NextRecord();
+                csvWriter.Flush();
+            }
+            await csvWriter.WriteRecordsAsync(persons);
+            memoryStream.Position = 0;
+            return memoryStream;
+        }
+
+        public async Task<MemoryStream> GetPersonExcel()
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            using(ExcelPackage excelPackage = new ExcelPackage(memoryStream))
+            {
+                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets.Add("PersonSheet");
+                worksheet.Cells["A1"].Value="Person Name";
+                worksheet.Cells["B1"].Value="Email";
+                worksheet.Cells["C1"].Value="Date of Birth";
+                worksheet.Cells["D1"].Value="Age";
+                worksheet.Cells["E1"].Value="Gender";
+                worksheet.Cells["F1"].Value="Country";
+                worksheet.Cells["G1"].Value = "Address";
+                worksheet.Cells["H1"].Value = "Receive News Letters";
+
+                using(ExcelRange excelRange = worksheet.Cells["A1:H1"])
+                {
+                    excelRange.Style.Fill.PatternType=OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    excelRange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGray);
+                }
+
+                int row = 2;
+
+                List<PersonResponse> persons = _dbContext.Persons.
+                    Include("Country")
+                     .Select(temp => temp.ConvertPersonToPersonResponse())
+                     .ToList();
+
+                foreach(PersonResponse person in persons)
+                {
+                    worksheet.Cells[row, 1].Value = person.PersonName;
+                    worksheet.Cells[row, 2].Value = person.Email;
+                    if (person.DateOfBirth.HasValue)
+                    {
+                        worksheet.Cells[row, 3].Value = person.DateOfBirth.Value.ToString("yyyy-MM-dd");
+                    }
+                    worksheet.Cells[row, 4].Value = person.Age;
+                    worksheet.Cells[row, 5].Value = person.Gender;
+                    worksheet.Cells[row, 6].Value = person.Country;
+                    worksheet.Cells[row, 7].Value = person.Address;
+                    worksheet.Cells[row, 8].Value = person.ReceiveNewsLetters;
+                    row++;
+              
+                }
+
+                worksheet.Cells[$"A1:H{row}"].AutoFitColumns();
+                await excelPackage.SaveAsync();
+            }
+
+            memoryStream.Position = 0;
+            return memoryStream;
+
+       }
     }
 }

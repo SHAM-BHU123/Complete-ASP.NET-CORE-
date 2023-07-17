@@ -39,7 +39,7 @@
     <label asp-for="DateOfBirth" class="form-label pt">Date of Birth</label>
    </div>
    <div class="flex-1">
-    <input asp-for="DateOfBirth" class="form-input" />
+    <input type="date" asp-for="DateOfBirth" class="form-input" />
     <span asp-validation-for="DateOfBirth" class="text-red"></span>
    </div>
   </div>
@@ -113,19 +113,13 @@
 </div>
 @section scripts
 {
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
-asp-fallback-test="window.JQuery" 
-asp-fallback-src="~/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" 
-asp-fallback-test="window.JQuery.validator"
-asp-fallback-src="~/cdnjs.cloudflare.com_ajax_libs_jquery-validate_1.19.4_jquery.validate.min.js"
->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"> 
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"
-asp-fallback-test="window.JQuery.validate.unobstrusive"
-asp-fallback-src="~/cdnjs.cloudflare.com_ajax_libs_jquery-validation-unobtrusive_3.2.12_jquery.validate.unobtrusive.min.js"
->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js">
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js">
+
 </script>
 }

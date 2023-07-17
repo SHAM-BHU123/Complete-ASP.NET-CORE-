@@ -123,6 +123,8 @@ namespace ServiceContracts.DTO
                
                 Math.Round((DateTime.Now - person.DateOfBirth.Value).TotalDays / 365.25) 
                 : null,
+                Country = person.Country?.CountryName
+
             };
         }
        

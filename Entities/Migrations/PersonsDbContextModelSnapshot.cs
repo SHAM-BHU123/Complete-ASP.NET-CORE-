@@ -94,9 +94,17 @@ namespace Entities.Migrations
                     b.Property<bool?>("ReceiveNewsLetters")
                         .HasColumnType("bit");
 
+                    b.Property<string>("TIN")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(8)")
+                        .HasDefaultValue("ABC123")
+                        .HasColumnName("TaxIdentificationNumber");
+
                     b.HasKey("PersonID");
 
                     b.ToTable("Persons", (string)null);
+
+                    b.HasCheckConstraint("CHK_TIN", "len([TaxIdentificationNumber])=8");
 
                     b.HasData(
                         new
