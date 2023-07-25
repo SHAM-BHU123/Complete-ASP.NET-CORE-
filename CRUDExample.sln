@@ -11,7 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{0404A791-4C10-4626-A429-5694F0CC76D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{2CB9A380-C05F-4D7D-9E15-0786B4611BBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{2CB9A380-C05F-4D7D-9E15-0786B4611BBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryContracts", "RepositoryContracts\RepositoryContracts.csproj", "{672774F5-A3E0-4785-ABFF-D9CD380B04DB}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0511C0D5-9097-459A-8BBD-C16C5A03119C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "..\Repositories\Repositories.csproj", "{76876AD2-6D39-4CB8-8CAD-66E5392E6B83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{2CB9A380-C05F-4D7D-9E15-0786B4611BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CB9A380-C05F-4D7D-9E15-0786B4611BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CB9A380-C05F-4D7D-9E15-0786B4611BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672774F5-A3E0-4785-ABFF-D9CD380B04DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672774F5-A3E0-4785-ABFF-D9CD380B04DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672774F5-A3E0-4785-ABFF-D9CD380B04DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672774F5-A3E0-4785-ABFF-D9CD380B04DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0511C0D5-9097-459A-8BBD-C16C5A03119C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0511C0D5-9097-459A-8BBD-C16C5A03119C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0511C0D5-9097-459A-8BBD-C16C5A03119C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0511C0D5-9097-459A-8BBD-C16C5A03119C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76876AD2-6D39-4CB8-8CAD-66E5392E6B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76876AD2-6D39-4CB8-8CAD-66E5392E6B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76876AD2-6D39-4CB8-8CAD-66E5392E6B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76876AD2-6D39-4CB8-8CAD-66E5392E6B83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

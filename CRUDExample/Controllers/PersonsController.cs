@@ -13,12 +13,15 @@ namespace CRUDExample.Controllers
     {
         private readonly IPersonsService _personsService;
         private readonly ICountriesService _countriesService;
+        private readonly ILogger<PersonsController> _logger;
 
-        public PersonsController(IPersonsService personsService, ICountriesService countriesService)
+        public PersonsController(IPersonsService personsService, ICountriesService countriesService,ILogger<PersonsController> logger)
         {
             _personsService = personsService;
             _countriesService = countriesService;
+            _logger = logger;
         }
+
 
         [Route("[action]")]
         [Route("/")]
@@ -30,6 +33,8 @@ namespace CRUDExample.Controllers
             )
 
         {
+            _logger.LogInformation("Index action method of PersonController");
+            _logger.LogDebug($"searchBy:{searchBy},searchSring:{searchString},sortBy:{sortBy},SortOrderOptions:{sortOrderOptions}");
             ViewBag.SearchFields = new Dictionary<string, string>()
             {
 
@@ -79,7 +84,7 @@ namespace CRUDExample.Controllers
                 ViewBag.CountryList = countries;
                 ViewBag.Errors= ModelState.Values.SelectMany(value=>value.Errors).
                 Select(error=>error.ErrorMessage).ToList();   
-                return View();
+                return View(personAddRequest);
                 
             }
             PersonResponse personResponse = await _personsService.AddPerson(personAddRequest);
@@ -90,7 +95,8 @@ namespace CRUDExample.Controllers
         [Route("[action]/{personID}")] //Eg: /persons/edit/1
         public async Task<IActionResult> Edit(Guid personID)
         {
-           PersonResponse? personResponse= await _personsService.GetPersonByPersonID(personID);
+            PersonResponse? personResponse= await _personsService.GetPersonByPersonID(personID);
+
             if (personResponse == null)
             {
                 return RedirectToAction("Index");

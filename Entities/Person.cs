@@ -26,6 +26,7 @@ namespace Entities
 
 
         //uniqueidentifier
+        [ForeignKey("CountryID")]
         public Guid? CountryID { get; set; }
         
         
@@ -35,8 +36,14 @@ namespace Entities
         public bool? ReceiveNewsLetters { get; set;}
 
         public string? TIN { get; set; }
-
+/*
         [ForeignKey("CountryID")]
+        public virtual Country? Country { get; set; }*/
         public virtual Country? Country { get; set; }
+
+        public override string ToString()
+        {
+            return $"Person Id:{PersonID},Person Name:{PersonName},Email:{Email},DateOfBirth:{DateOfBirth?.ToString("MM/dd/yyyy")},Gender:{Gender} Country ID:{CountryID},Country:{Country?.CountryName},Address:{Address},Receive News Letters:{ReceiveNewsLetters}";
+        }
     }
 }

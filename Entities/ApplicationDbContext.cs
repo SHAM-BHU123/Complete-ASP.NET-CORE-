@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 namespace Entities
 {
-    public class PersonsDbContext:DbContext
+    public class ApplicationDbContext:DbContext
     {
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public PersonsDbContext(DbContextOptions dbContextOptions):base 
+        public virtual  DbSet<Country> Countries { get; set; }
+        public  virtual DbSet<Person> Persons { get; set; }
+        public ApplicationDbContext(DbContextOptions dbContextOptions):base 
         (dbContextOptions)
         {
          
@@ -56,12 +56,12 @@ namespace Entities
 
 
             /* Table Relations*/
-            modelBuilder.Entity<Person>(entity =>
+           /* modelBuilder.Entity<Person>(entity =>
             {
                 entity.HasOne<Country>(c => c.Country)
                 .WithMany(p => p.Persons)
                 .HasForeignKey(p => p.CountryID);
-            });
+            });*/
         }
 
 

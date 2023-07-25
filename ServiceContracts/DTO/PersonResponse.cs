@@ -58,7 +58,6 @@ namespace ServiceContracts.DTO
             CountryID == personResponse.CountryID &&
             Address == personResponse.Address &&
             ReceiveNewsLetters == personResponse.ReceiveNewsLetters;
-            
 
         }
 

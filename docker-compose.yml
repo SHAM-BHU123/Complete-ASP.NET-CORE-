@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  crudexample:
+    image: ${DOCKER_REGISTRY-}crudexample
+    build:
+      context: .
+      dockerfile: CRUDExample/Dockerfile
+    ports:
+        - "80:80"   
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'Abcd1234!'
+    ports:
+      - 1433:1433
+    deploy:
+      resources:
+        limits:
+          memory: "2.5g"

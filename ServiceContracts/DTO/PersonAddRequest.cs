@@ -39,14 +39,16 @@ namespace ServiceContracts.DTO
         /// <returns></returns>
         public Person ToPerson()
         {
-            return new Person() { 
+            return new Person()
+            { 
                 PersonName = PersonName,
                 Email = Email,
                 DateOfBirth = DateOfBirth, 
                 Gender = Gender.ToString(), 
                 Address = Address, 
                 CountryID = CountryID, 
-                ReceiveNewsLetters = ReceiveNewsLetters };
+                ReceiveNewsLetters = ReceiveNewsLetters
+            };
         }
     }
 }
